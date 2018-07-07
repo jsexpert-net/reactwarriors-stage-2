@@ -1,11 +1,81 @@
+$orange:#f26120;
+$blue: #19ddfe;
+
 body {
   background: #fdfdfd;
 }
-
+ 
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 360px;
+  width: 460px;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+  align-items: center;
+
+  &:not(:first-child)::before {
+    height: .2em;
+    width: 100%;
+    bottom: 0;
+    left: -50%;
+    top: 1rem;
+    content: " ";
+    display: block;
+    position: absolute;
+    background: #b5b5b5;
+  }
+
+  &__marker {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: 700;
+    justify-content: center;
+    background: #b5b5b5;
+    color: #fff;
+    border: 4px solid #fff;
+    z-index: 1;
+  }
+
+  &.is-completed {
+    &:not(:first-child)::before {
+      background: $orange;
+    }
+
+    .step__marker {
+      background: $orange;
+      border: 4px solid $orange;
+    }
+  }
+  
+  &.is-active {
+    &:not(:first-child)::before {
+      background: $orange;
+    }
+
+    .step__marker {
+      background: $blue;
+      border: 4px solid $orange;
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+  }
 }
