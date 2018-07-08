@@ -5,6 +5,7 @@ import Basic from "./steps/Basic";
 import Contacts from "./steps/Contacts";
 import Photo from "./steps/Photo";
 import Finish from "./steps/Finish";
+import validate from "./validate";
 
 class App extends Component {
   constructor() {
@@ -42,8 +43,8 @@ class App extends Component {
         gender: "male",
         mobile: "",
         email: "",
-        country: 1,
-        city: 1,
+        country: "1",
+        city: "",
         photo: ""
       },
       errors: {
@@ -66,22 +67,41 @@ class App extends Component {
       ...this.state.values,
       [event.target.name]: event.target.value
     };
+
+    const newErrors = {
+      ...this.state.errors,
+      [event.target.name]: false
+    };
+
+    if (event.target.name === "country") {
+      newValues.city = "";
+      newErrors.city = false;
+    }
+
     this.setState(prevState => ({
       ...prevState,
-      values: newValues
+      values: newValues,
+      errors: newErrors
     }));
   };
   goNextStep = () => {
-    const newSteps = [...this.state.steps];
-    const newActiveStes = this.state.activeStep + 1;
-    newSteps[this.state.activeStep].isActive = false;
-    newSteps[newActiveStes].isActive = true;
-    // if validate
-    newSteps[this.state.activeStep].isCompleted = true;
-    this.setState({
-      activeStep: newActiveStes,
-      steps: newSteps
-    });
+    const errors = validate(this.state.values, this.state.activeStep);
+
+    if (Object.keys(errors).length === 0) {
+      const newSteps = [...this.state.steps];
+      const newActiveStes = this.state.activeStep + 1;
+      newSteps[this.state.activeStep].isActive = false;
+      newSteps[newActiveStes].isActive = true;
+      newSteps[this.state.activeStep].isCompleted = true;
+      this.setState({
+        activeStep: newActiveStes,
+        steps: newSteps
+      });
+    } else {
+      this.setState({
+        errors
+      });
+    }
   };
 
   goPrevStep = () => {
@@ -96,19 +116,31 @@ class App extends Component {
   };
 
   render() {
-    const { steps, activeStep, values } = this.state;
+    const { steps, activeStep, values, errors } = this.state;
     return (
       <div className="form-container card">
         <form className="form card-body">
           <Steps steps={steps} activeStep={activeStep} />
           {steps[0].isActive && (
-            <Basic values={values} onChangeField={this.onChangeField} />
+            <Basic
+              values={values}
+              onChangeField={this.onChangeField}
+              errors={errors}
+            />
           )}
           {steps[1].isActive && (
-            <Contacts values={values} onChangeField={this.onChangeField} />
+            <Contacts
+              values={values}
+              onChangeField={this.onChangeField}
+              errors={errors}
+            />
           )}
           {steps[2].isActive && (
-            <Photo values={values} onChangeField={this.onChangeField} />
+            <Photo
+              values={values}
+              onChangeField={this.onChangeField}
+              errors={errors}
+            />
           )}
           {steps[3].isActive && <Finish values={values} />}
           <NavigationBottom

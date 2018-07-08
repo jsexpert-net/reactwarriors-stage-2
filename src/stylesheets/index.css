@@ -8,6 +8,13 @@ body {
   transform: translate(-50%, -50%);
   width: 460px; }
 
+.invalid-feedback {
+  display: block; }
+
+input.invalid,
+select.invalid {
+  border-color: #dc3545; }
+
 .steps {
   display: flex;
   justify-content: space-between; }
