@@ -40,6 +40,12 @@ const validate = (values, step) => {
         errors.city = "Required";
       }
       break;
+
+    case 2:
+      if (!values.avatar) {
+        errors.avatar = "Required";
+      }
+      break;
     default:
       break;
   }

@@ -3,7 +3,7 @@ import Steps from "./Steps";
 import NavigationBottom from "./NavigationBottom";
 import Basic from "./steps/Basic";
 import Contacts from "./steps/Contacts";
-import Photo from "./steps/Photo";
+import Avatar from "./steps/Avatar";
 import Finish from "./steps/Finish";
 import validate from "./validate";
 
@@ -25,7 +25,7 @@ class App extends Component {
           isCompleted: false
         },
         {
-          name: "Photo",
+          name: "Avatar",
           isActive: false,
           isCompleted: false
         },
@@ -45,7 +45,7 @@ class App extends Component {
         email: "",
         country: "1",
         city: "",
-        photo: ""
+        avatar: ""
       },
       errors: {
         firstname: false,
@@ -57,7 +57,7 @@ class App extends Component {
         email: false,
         country: false,
         city: false,
-        photo: false
+        avatar: false
       }
     };
   }
@@ -136,7 +136,7 @@ class App extends Component {
             />
           )}
           {steps[2].isActive && (
-            <Photo
+            <Avatar
               values={values}
               onChangeField={this.onChangeField}
               errors={errors}

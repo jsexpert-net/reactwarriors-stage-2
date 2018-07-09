@@ -24,7 +24,13 @@ class NavigationBottom extends Component {
             </button>
           </React.Fragment>
         ) : (
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
             Reset
           </button>
         )}
